@@ -1,6 +1,6 @@
 {
-    "name": "openeuropa/multivalue_form_element",
-    "description": "OpenEuropa Drupal module template.",
+    "name": "drupal/multivalue_form_element",
+    "description": "Provides a form element that wraps existing form elements, making them multi-value.",
     "type": "drupal-module",
     "license": "EUPL-1.2",
     "minimum-stability": "dev",

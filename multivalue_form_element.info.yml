@@ -1,6 +1,4 @@
-name: OpenEuropa template
-description: OpenEuropa Drupal module template.
-package: OpenEuropa
-
+name: 'Multi-value form element'
+description: 'Provides a form element that wraps existing form elements, making them multi-value.'
 type: module
-core: 8.x
+core_version_requirement: ^8 || ^9
