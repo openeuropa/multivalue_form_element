@@ -72,7 +72,7 @@ class MultiValue extends FormElement {
       $element_state = [
         // The initial count is always based on the default value. The default
         // value should always have numeric keys.
-        'items_count' => count($element['#default_value']),
+        'items_count' => count($element['#default_value'] ?? []),
         'array_parents' => [],
       ];
       static::setElementState($parents, $element_name, $form_state, $element_state);
