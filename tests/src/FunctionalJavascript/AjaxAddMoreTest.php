@@ -45,7 +45,7 @@ class AjaxAddMoreTest extends WebDriverTestBase {
     $this->assertNotEmpty($field_foo_1);
 
     // Validate the value of the "foo" field has not changed.
-    $this->assertequals('1', $field_foo_0->getValue());
+    $this->assertEquals('1', $field_foo_0->getValue());
 
     // Validate the value of the second item is empty.
     $this->assertEmpty($field_foo_1->getValue());

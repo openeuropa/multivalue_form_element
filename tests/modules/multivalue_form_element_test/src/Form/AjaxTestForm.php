@@ -17,7 +17,7 @@ class AjaxTestForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'multivalue_form_element_test_form';
+    return 'multivalue_form_element_ajax_test_form';
   }
 
   /**
