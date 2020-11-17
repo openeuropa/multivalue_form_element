@@ -97,6 +97,8 @@ class MultiValue extends FormElement {
     }
 
     $value = is_array($element['#value']) ? $element['#value'] : [];
+    // Re-key the elements so that deltas are consecutive.
+    $value = array_values($value);
 
     for ($i = 0; $i <= $max; $i++) {
       $element[$i] = $children;
@@ -153,6 +155,11 @@ class MultiValue extends FormElement {
     $children_count = count($children_keys);
 
     foreach ($element['#default_value'] as $delta => $default_value) {
+      // Enforce numeric deltas.
+      if (!is_numeric($delta)) {
+        continue;
+      }
+
       // Allow to omit the child element name when one single child exists and
       // - the values are simple literals. This allows to pass
       //   [0 => 'value 1', 1 => 'value 2'] instead of
