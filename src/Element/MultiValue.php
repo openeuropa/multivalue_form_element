@@ -161,14 +161,10 @@ class MultiValue extends FormElement {
       }
 
       // Allow to omit the child element name when one single child exists and
-      // - the values are simple literals. This allows to pass
-      //   [0 => 'value 1', 1 => 'value 2'] instead of
-      //   [0 => ['element_name' => 'value 1', 1 => ['element_name' => ...]].
-      // - the value is an array but the child key is not part of it. This is
-      //   useful with children that can have multiple values, like checkboxes.
-      //   This syntax should be used only if there is no possibility that a
-      //   default value matches the element name.
-      if ($children_count === 1 && (!is_array($default_value) || (!isset($default_value[$first_child])))) {
+      // the values are simple literals. This allows to pass
+      // [0 => 'value 1', 1 => 'value 2'] instead of
+      // [0 => ['element_name' => 'value 1', 1 => ['element_name' => ...]].
+      if ($children_count === 1 && !is_array($default_value)) {
         $value[$delta] = [$first_child => $default_value];
       }
       else {
