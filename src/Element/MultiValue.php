@@ -107,6 +107,8 @@ class MultiValue extends FormElement {
         static::setDefaultValue($element[$i], $value[$i]);
       }
 
+      static::setRequiredProperty($element[$i], $i, $element['#required']);
+
       $element[$i]['_weight'] = [
         '#type' => 'weight',
         '#title' => t('Weight for row @number', ['@number' => $i + 1]),
@@ -242,6 +244,41 @@ class MultiValue extends FormElement {
       if (isset($value[$child])) {
         $elements[$child]['#default_value'] = $value[$child];
       }
+    }
+  }
+
+  /**
+   * Sets the required property for the delta being processed.
+   *
+   * @param array $elements
+   *   The array containing the children elements.
+   * @param int $delta
+   *   The delta currently being processed.
+   * @param bool $required
+   *   If the main element is required or not.
+   */
+  protected static function setRequiredProperty(array &$elements, int $delta, bool $required): void {
+    if ($delta === 0 && $required) {
+      // If any of the children is set as required, the first delta is already
+      // set correctly.
+      foreach ($elements as $element) {
+        if (isset($element['#required']) && $element['#required'] === TRUE) {
+          return;
+        }
+      }
+
+      // Set all children as required otherwise.
+      foreach ($elements as &$element) {
+        $element['#required'] = TRUE;
+      }
+
+      return;
+    }
+
+    // For every other delta or when the main element is marked as not required,
+    // none of the children should be required neither.
+    foreach ($elements as &$element) {
+      $element['#required'] = FALSE;
     }
   }
 

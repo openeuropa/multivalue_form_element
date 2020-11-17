@@ -101,6 +101,8 @@ class ElementTestForm extends FormBase {
       '#default_value' => $default_values['complex'] ?? [],
     ];
 
+    // A nested element, used to test the generation of the button name and
+    // AJAX wrapper.
     $form['nested'] = [
       '#type' => 'container',
       '#tree' => TRUE,
