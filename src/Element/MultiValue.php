@@ -6,6 +6,7 @@ namespace Drupal\multivalue_form_element\Element;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Component\Utility\SortArray;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
@@ -40,8 +41,11 @@ class MultiValue extends FormElement {
       '#cardinality' => self::CARDINALITY_UNLIMITED,
       '#add_more_label' => $this->t('Add another item'),
       '#process' => [
-        [$class, 'processMultiValueElement'],
+        [$class, 'processMultiValue'],
         [$class, 'processAjaxForm'],
+      ],
+      '#element_validate' => [
+        [$class, 'validateMultiValue'],
       ],
     ];
   }
@@ -59,7 +63,7 @@ class MultiValue extends FormElement {
    * @return array
    *   The processed element.
    */
-  public static function processMultiValueElement(array &$element, FormStateInterface $form_state, array &$complete_form): array {
+  public static function processMultiValue(array &$element, FormStateInterface $form_state, array &$complete_form): array {
     $element_name = end($element['#array_parents']);
     $parents = $element['#parents'];
     $cardinality = $element['#cardinality'];
@@ -139,6 +143,56 @@ class MultiValue extends FormElement {
     }
 
     return $element;
+  }
+
+  /**
+   * Validates a multi-value form element.
+   *
+   * Used to clean and sort the submitted values in the form state.
+   *
+   * @param array $element
+   *   The element being processed.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   * @param array $complete_form
+   *   The complete form.
+   */
+  public static function validateMultiValue(array &$element, FormStateInterface $form_state, array &$complete_form): void {
+    $input_exists = FALSE;
+    $values = NestedArray::getValue($form_state->getValues(), $element['#parents'], $input_exists);
+
+    if (!$input_exists) {
+      return;
+    }
+
+    // Remove the 'value' of the 'add more' button.
+    unset($values['add_more']);
+
+    // Sort the values based on the weight.
+    usort($values, function ($a, $b) {
+      return SortArray::sortByKeyInt($a, $b, '_weight');
+    });
+
+    foreach ($values as &$delta_values) {
+      // Remove all the weight element values from the submitted data.
+      unset($delta_values['_weight']);
+
+      // Filter out any empty children element.
+      $delta_values = array_filter($delta_values, function ($value): bool {
+        if (is_array($value)) {
+          return !empty($value);
+        }
+
+        return $value !== NULL && $value !== '';
+      });
+    }
+
+    // Filter out all the empty deltas that might be present after children
+    // cleanup.
+    $values = array_filter($values);
+
+    // Set the value back to the form state.
+    $form_state->setValueForElement($element, $values);
   }
 
   /**
