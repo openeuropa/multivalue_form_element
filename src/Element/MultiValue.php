@@ -173,23 +173,28 @@ class MultiValue extends FormElement {
       return SortArray::sortByKeyInt($a, $b, '_weight');
     });
 
-    foreach ($values as &$delta_values) {
-      // Remove all the weight element values from the submitted data.
+    foreach ($values as $delta => &$delta_values) {
+      // Remove the weight element value from the submitted data.
       unset($delta_values['_weight']);
 
-      // Filter out any empty children element.
-      $delta_values = array_filter($delta_values, function ($value): bool {
+      // Determine if all the elements of this delta are empty.
+      $is_empty_delta = array_reduce($delta_values, function (bool $carry, $value): bool {
         if (is_array($value)) {
-          return !empty($value);
+          return $carry && empty(array_filter($value));
         }
+        else {
+          return $carry && ($value === NULL || $value === '');
+        }
+      }, TRUE);
 
-        return $value !== NULL && $value !== '';
-      });
+      // If all the elements are empty, drop this delta.
+      if ($is_empty_delta) {
+        unset($values[$delta]);
+      }
     }
 
-    // Filter out all the empty deltas that might be present after children
-    // cleanup.
-    $values = array_filter($values);
+    // Re-key the elements so that deltas are consecutive.
+    $values = array_values($values);
 
     // Set the value back to the form state.
     $form_state->setValueForElement($element, $values);
