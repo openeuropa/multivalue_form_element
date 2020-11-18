@@ -117,6 +117,85 @@ class MultiValueElementTest extends BrowserTestBase {
     $assert_session->fieldExists('foo[0][text]');
     $assert_session->fieldExists('foo[1][text]');
     $assert_session->elementNotExists('css', 'input[name^="foo[2]"]');
+
+    // Reset all the default values.
+    $this->setFormDefaultValues([]);
+    $this->drupalGet('/multivalue-form-element/element-test-form');
+
+    // Set some values around to test submissions.
+    $assert_session->fieldExists('complex[0][text]')->setValue('g');
+    $assert_session->fieldExists('complex[0][number]')->setValue(7);
+    $add_more = $assert_session->buttonExists('complex_add_more');
+    // Add one more delta, but leave it empty.
+    $add_more->press();
+    // Add another item but fill only one of the two values.
+    $add_more->press();
+    $assert_session->fieldExists('complex[2][text]')->setValue('FALSE');
+    // Another item with the number set to a "falsy" value.
+    $add_more->press();
+    $assert_session->fieldExists('complex[3][number]')->setValue('0');
+
+    // Submit the form.
+    $assert_session->buttonExists('Submit')->press();
+    $submitted_values = $this->getSubmittedFormValues();
+    // The submitted values do not contain the "add more" button, have
+    // consecutive deltas and the empty entries have been dropped.
+    $this->assertEquals([
+      0 => [
+        'text' => 'g',
+        'number' => '7',
+      ],
+      1 => [
+        'text' => 'FALSE',
+        'number' => '',
+      ],
+      2 => [
+        'text' => '',
+        'number' => '0',
+      ],
+    ], $submitted_values['complex']);
+
+    // The other elements were empty, so they all result to empty arrays.
+    $this->assertEquals([], $submitted_values['foo']);
+    $this->assertEquals([], $submitted_values['bar']);
+    $this->assertEquals(['inner' => ['foo' => []]], $submitted_values['nested']);
+
+    // Test that the value cleaning works correctly for elements with arrays as
+    // value, like checkboxes.
+    $assert_session->buttonExists('nested_inner_foo_add_more')->press();
+    // Leave the first delta empty and make a selection in the second.
+    $assert_session->fieldExists('nested[inner][foo][1][bar][a]')->check();
+    $assert_session->buttonExists('Submit')->press();
+    $submitted_values = $this->getSubmittedFormValues();
+    $this->assertEquals([
+      0 => [
+        'bar' => [
+          'a' => 'a',
+          'b' => 0,
+        ],
+      ],
+    ], $submitted_values['nested']['inner']['foo']);
+
+    // Verify that deltas are correctly reordered, based on their weight.
+    $assert_session->fieldExists('bar[0][number]')->setValue(1);
+    $assert_session->fieldExists('bar[0][_weight]')->setValue(0);
+    $assert_session->fieldExists('bar[1][number]')->setValue(2);
+    $assert_session->fieldExists('bar[1][_weight]')->setValue(-10);
+    $assert_session->fieldExists('bar[2][number]')->setValue(3);
+    $assert_session->fieldExists('bar[2][_weight]')->setValue(-5);
+    $assert_session->buttonExists('Submit')->press();
+    $submitted_values = $this->getSubmittedFormValues();
+    $this->assertEquals([
+      0 => [
+        'number' => 2,
+      ],
+      1 => [
+        'number' => 3,
+      ],
+      2 => [
+        'number' => 1,
+      ],
+    ], $submitted_values['bar']);
   }
 
   /**
@@ -127,6 +206,18 @@ class MultiValueElementTest extends BrowserTestBase {
    */
   protected function setFormDefaultValues(array $default_values): void {
     \Drupal::state()->set('multivalue_form_element_test_default_values', $default_values);
+  }
+
+  /**
+   * Returns the submitted form values from the test form.
+   *
+   * @return array
+   *   The submitted test form values.
+   */
+  protected function getSubmittedFormValues(): array {
+    // Make sure to reset the cache to get fresh values from state.
+    \Drupal::service('state')->resetCache();
+    return \Drupal::state()->get('multivalue_form_element_test_submitted_values', []);
   }
 
 }

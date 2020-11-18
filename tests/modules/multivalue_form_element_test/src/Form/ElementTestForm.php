@@ -111,10 +111,14 @@ class ElementTestForm extends FormBase {
         'foo' => [
           '#type' => 'multivalue',
           '#cardinality' => MultiValue::CARDINALITY_UNLIMITED,
-          '#title' => $this->t('Foo'),
-          'text' => [
-            '#type' => 'textfield',
-            '#title' => $this->t('Text'),
+          '#title' => $this->t('Inner foo'),
+          'bar' => [
+            '#type' => 'checkboxes',
+            '#title' => $this->t('Values'),
+            '#options' => [
+              'a' => $this->t('Value A'),
+              'b' => $this->t('Value B'),
+            ],
           ],
         ],
       ],
@@ -136,7 +140,6 @@ class ElementTestForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $form_state->cleanValues();
     $this->state->set('multivalue_form_element_test_submitted_values', $form_state->getValues());
   }
 
