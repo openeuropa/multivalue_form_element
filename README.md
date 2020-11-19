@@ -1,6 +1,24 @@
-# OpenEuropa multivalue_form_element
+# Multi-value form element
 
-The OpenEuropa multivalue_form_element provides ...`[One Paragraph of project description goes here]`
+Provides a multi-value form element that wraps other single or sets of form elements.
+
+Example:
+```php
+$form['contacts'] = [
+  '#type' => 'multivalue',
+  '#title' => $this->t('Contacts'),
+  'name' => [
+    '#type' => 'textfield',
+    '#title' => $this->t('Name'),
+  ],
+  'mail' => [
+    '#type' => 'email',
+    '#title' => $this->t('E-mail'),
+  ],
+];
+```
+
+For extended documentation, see the form element class documentation.
 
 ## Development setup
 
@@ -26,10 +44,10 @@ The development site web root should be available in the `build` directory.
 
 ### Using Docker Compose
 
-Alternatively, you can build a development site using [Docker](https://www.docker.com/get-docker) and 
+Alternatively, you can build a development site using [Docker](https://www.docker.com/get-docker) and
 [Docker Compose](https://docs.docker.com/compose/) with the provided configuration.
 
-Docker provides the necessary services and tools such as a web server and a database server to get the site running, 
+Docker provides the necessary services and tools such as a web server and a database server to get the site running,
 regardless of your local host configuration.
 
 #### Requirements:
@@ -40,8 +58,8 @@ regardless of your local host configuration.
 #### Configuration
 
 By default, Docker Compose reads two files, a `docker-compose.yml` and an optional `docker-compose.override.yml` file.
-By convention, the `docker-compose.yml` contains your base configuration and it's provided by default.
-The override file, as its name implies, can contain configuration overrides for existing services or entirely new 
+By convention, the `docker-compose.yml` contains your base configuration and it's provided by default.\
+The override file, as its name implies, can contain configuration overrides for existing services or entirely new
 services.
 If a service is defined in both files, Docker Compose merges the configurations.
 

@@ -1,4 +1,4 @@
 name: 'Multi-value form element'
-description: 'Provides a form element that wraps existing form elements, making them multi-value.'
+description: 'Provides a multi-value form element that wraps other single or sets of form elements.'
 type: module
 core_version_requirement: ^8 || ^9
