@@ -13,11 +13,116 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\FormElement;
 
 /**
- * Provides a form element with cardinality.
+ * Provides a multi-value form element.
  *
- * This form element wraps other form elements.
+ * Properties:
+ * - #cardinality: the cardinality of this element. Can be a positive number or
+ *   MultiValue::CARDINALITY_UNLIMITED to set it as unlimited. The default value
+ *   is unlimited.
+ * - #add_more_label: the label to use for the "add more" button. The default
+ *   value is "Add another item".
  *
- * @todo Remove 'array_parents'
+ * Use this element as a wrapper for other form elements. They will be repeated
+ * based on the cardinality specified, organised under a "delta", similar to
+ * field widgets. Deltas are sortable.
+ * Example of an element that allows to specify unlimited job title strings:
+ * @code
+ * $form['job_titles'] = [
+ *   '#type' => 'multivalue',
+ *   '#title' => $this->t('Job titles'),
+ *   'title' => [
+ *     '#type' => 'textfield',
+ *     '#title' => $this->t('Job title'),
+ *     '#title_display' => 'invisible',
+ *   ],
+ * ];
+ * @endcode
+ *
+ * Example of an element with multiple form elements inside. Each "delta" will
+ * contain all the children of the main element. This example allows to specify
+ * up to three pairs of name/e-mail values:
+ * @code
+ * $form['contacts'] = [
+ *   '#type' => 'multivalue',
+ *   '#title' => $this->t('Contacts'),
+ *   '#cardinality' => 3,
+ *   'name' => [
+ *     '#type' => 'textfield',
+ *     '#title' => $this->t('Name'),
+ *   ],
+ *   'mail' => [
+ *     '#type' => 'email',
+ *     '#title' => $this->t('E-mail'),
+ *   ],
+ * ];
+ * @endCode
+ *
+ * Default values can be set to the multi-value form element. Never set them in
+ * child elements as they will be overridden.
+ * Pass the default values keyed by their delta:
+ * @code
+ * $form['contacts'] = [
+ *   '#type' => 'multivalue',
+ *   '#default_value' => [
+ *     0 => ['name' => 'Bob', 'mail' => 'bob@example.com'],
+ *     1 => ['name' => 'Ted', 'mail' => 'ted@example.com'],
+ *   ],
+ *   ...
+ * ];
+ * @endCode
+ *
+ * If only one child element is present, said child element name can be omitted
+ * from the default value array:
+ * @code
+ * $form['job_titles'] = [
+ *   '#type' => 'multivalue',
+ *   '#title' => $this->t('Job titles'),
+ *   'title' => [
+ *     ...
+ *   ],
+ *   '#default_value' => [
+ *     'Foo',
+ *     'Bar',
+ *   ],
+ * ];
+ * @endcode
+ * Note that the values in the form state will always have the full array
+ * structure, including the child element name.
+ *
+ * The element can be marked as required. The required will apply *only* to the
+ * first delta. This behaviour is consistent with entity fields.
+ * How child elements are marked as required depends on their own #required
+ * property.
+ * Given the multi-value element is marked as required:
+ * - if no children is marked as required, all the children of the first delta
+ *   will be set as required.
+ * - if any children is marked as required, then the required status specified
+ *   for the children will be retained for the first delta.
+ * For all the deltas after the first, or when the main element is not marked
+ * as required, the #required property of the child elements will be set to
+ * FALSE.
+ *
+ * Example of specifying only some elements are required:
+ * @code
+ * $form['contacts'] = [
+ *   '#type' => 'multivalue',
+ *   '#title' => $this->t('Contacts'),
+ *   '#required' => TRUE,
+ *   'name' => [
+ *     '#type' => 'textfield',
+ *     '#title' => $this->t('Name'),
+ *     '#required' => TRUE,
+ *   ],
+ *   'mail' => [
+ *     '#type' => 'email',
+ *     '#title' => $this->t('E-mail'),
+ *   ],
+ * ];
+ * @endCode
+ *
+ * If you want to have some children required in all the deltas, use #states
+ * to mark the wanted elements as required if one of the other children is
+ * filled.
  *
  * @FormElement("multivalue")
  */
@@ -290,7 +395,7 @@ class MultiValue extends FormElement {
   }
 
   /**
-   * Sets the default value for the children elements.
+   * Sets the default value for the child elements.
    *
    * @param array $elements
    *   The elements array.
@@ -310,7 +415,7 @@ class MultiValue extends FormElement {
    * Sets the required property for the delta being processed.
    *
    * @param array $elements
-   *   The array containing the children elements.
+   *   The array containing the child elements.
    * @param int $delta
    *   The delta currently being processed.
    * @param bool $required
