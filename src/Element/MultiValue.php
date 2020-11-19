@@ -182,7 +182,6 @@ class MultiValue extends FormElement {
         // The initial count is always based on the default value. The default
         // value should always have numeric keys.
         'items_count' => count($element['#default_value'] ?? []),
-        'array_parents' => [],
       ];
       static::setElementState($parents, $element_name, $form_state, $element_state);
     }
@@ -461,8 +460,6 @@ class MultiValue extends FormElement {
    * @return array
    *   An array with the following key/value pairs:
    *   - items_count: The number of sub-elements to display for the element.
-   *   - array_parents: The location of the field's widgets within the $form
-   *     structure. This entry is populated at '#after_build' time.
    *
    * @see \Drupal\Core\Field\WidgetBase::getWidgetState()
    */
