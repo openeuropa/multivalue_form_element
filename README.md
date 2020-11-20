@@ -1,6 +1,6 @@
 # Multi-value form element
 
-Provides a multi-value form element that wraps other single or sets of form elements.
+Provides a multi-value form element that wraps any number of form elements.
 
 Example:
 ```php
