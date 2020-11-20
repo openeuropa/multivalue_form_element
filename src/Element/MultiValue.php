@@ -187,15 +187,7 @@ class MultiValue extends FormElement {
     }
 
     // Determine the number of elements to display.
-    switch ($cardinality) {
-      case self::CARDINALITY_UNLIMITED:
-        $max = $element_state['items_count'];
-        break;
-
-      default:
-        $max = $cardinality - 1;
-        break;
-    }
+    $max = $cardinality === self::CARDINALITY_UNLIMITED ? $element_state['items_count'] : ($cardinality - 1);
 
     // Extract the elements that will have to be repeated for each delta.
     $children = [];
