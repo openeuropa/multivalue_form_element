@@ -1,0 +1,25 @@
+multivalue_form_element_test.ajax_test_form:
+  path: '/multivalue-form-element/ajax-test-form'
+  defaults:
+    _title: 'Multi-value form element AJAX test form'
+    _form: '\Drupal\multivalue_form_element_test\Form\AjaxTestForm'
+  requirements:
+    _access: 'TRUE'
+
+multivalue_form_element_test.element_test_form:
+  path: '/multivalue-form-element/element-test-form'
+  defaults:
+    _title: 'Multi-value form element test form'
+    _form: '\Drupal\multivalue_form_element_test\Form\ElementTestForm'
+  options:
+    no_cache: 'TRUE'
+  requirements:
+    _access: 'TRUE'
+
+multivalue_form_element_test.required_elements_test_form:
+  path: '/multivalue-form-element/required-elements-test-form'
+  defaults:
+    _title: 'Multi-value form required elements test form'
+    _form: '\Drupal\multivalue_form_element_test\Form\RequiredElementsTestForm'
+  requirements:
+    _access: 'TRUE'
