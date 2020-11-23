@@ -8,6 +8,8 @@ use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 
 /**
  * Tests the "Add more" functionality for multi-value elements.
+ *
+ * @group multivalue_form_element
  */
 class AjaxAddMoreTest extends WebDriverTestBase {
 
