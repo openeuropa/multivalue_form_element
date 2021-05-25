@@ -48,10 +48,10 @@ class RequiredElementsTest extends BrowserTestBase {
     // Adding an item will trigger the error validation for this multi-value
     // element.
     $assert_session->buttonExists('partial_required_add_more')->press();
-    $this->assertText('Baz field is required.');
+    $this->assertSession()->responseContains('Baz field is required.');
     // Test that the add more button limits correctly the validation.
-    $this->assertNoText('Foo field is required.');
-    $this->assertNoText('Bar field is required.');
+    $this->assertSession()->responseNotContains('Foo field is required.');
+    $this->assertSession()->responseNotContains('Bar field is required.');
 
     $assert_session->fieldExists('partial_required[0][baz]')->setValue($this->randomString());
     $assert_session->buttonExists('partial_required_add_more')->press();

@@ -57,6 +57,19 @@ pipeline:
     commands:
       - ./vendor/bin/phpunit
 
+  test-drupal9-upgrade_status:
+    group: test
+    image: registry.fpfis.eu/fpfis/httpd-php:${PHP_VERSION}-ci
+    commands:
+      - ./vendor/bin/drupal-check --drupal-root build build/modules/custom/multivalue_form_element
+
+  test-drupal9-drupal-check:
+    group: test
+    image: registry.fpfis.eu/fpfis/httpd-php:${PHP_VERSION}-ci
+    commands:
+      - ./vendor/bin/drush pm:enable upgrade_status -y
+      - ./vendor/bin/drush upgrade_status:analyze --all --ignore-contrib
+
   debug:
     image: registry.fpfis.eu/fpfis/httpd-php:${PHP_VERSION}-ci
     commands:
