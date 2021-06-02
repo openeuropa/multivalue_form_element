@@ -7,16 +7,16 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7.3",
-        "drupal/core": "^8.9 || ^9"
+        "drupal/core": "^8.9 || ^9.1"
     },
     "require-dev": {
         "composer/installers": "^1.11",
-        "drupal/core-composer-scaffold": "^8.9 || ^9",
+        "drupal/core-composer-scaffold": "^8.9 || ^9.1",
         "drupal/drupal-extension": "~4.0",
         "drush/drush": "^10.3",
         "openeuropa/behat-transformation-context": "~0.1",
         "openeuropa/code-review": "~1.6",
-        "openeuropa/drupal-core-require-dev": "^8.9 || ^9",
+        "openeuropa/drupal-core-require-dev": "^8.9 || ^9.1",
         "openeuropa/task-runner-drupal-project-symlink": "^1.0",
         "phpspec/prophecy-phpunit": "^1 || ^2"
     },
