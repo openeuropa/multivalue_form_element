@@ -1,5 +1,5 @@
-name: 'Multi-value form element test'
-description: 'Test module for Multi-value form element.'
+name: Multi-value form element test
+description: Test module for Multi-value form element.
 type: module
 package: Testing
 core_version_requirement: ^8 || ^9
