@@ -1,8 +1,17 @@
 # Change Log
 
+## [1.0.0-beta2](https://github.com/openeuropa/multivalue_form_element/tree/1.0.0-beta2) (2021-06-29)
+[Full Changelog](https://github.com/openeuropa/multivalue_form_element/compare/1.0.0-beta1...1.0.0-beta2)
+
+**Merged pull requests:**
+
+- OEL-160: Drupal 9 compatibility fixes. [\#9](https://github.com/openeuropa/multivalue_form_element/pull/9) ([saidatom](https://github.com/saidatom))
+- EWPP-721: Update xdebug configuration. [\#7](https://github.com/openeuropa/multivalue_form_element/pull/7) ([22Alexandra](https://github.com/22Alexandra))
+
 ## [1.0.0-beta1](https://github.com/openeuropa/multivalue_form_element/tree/1.0.0-beta1) (2020-12-03)
 **Merged pull requests:**
 
+- Update changelog for release 1.0.0-beta1. [\#4](https://github.com/openeuropa/multivalue_form_element/pull/4) ([brummbar](https://github.com/brummbar))
 - EWPP-476: Missing group in test. [\#3](https://github.com/openeuropa/multivalue_form_element/pull/3) ([brummbar](https://github.com/brummbar))
 - EWPP-476: Multi-value form element. [\#2](https://github.com/openeuropa/multivalue_form_element/pull/2) ([brummbar](https://github.com/brummbar))
 - EWPP-476: scaffold module. [\#1](https://github.com/openeuropa/multivalue_form_element/pull/1) ([brummbar](https://github.com/brummbar))
