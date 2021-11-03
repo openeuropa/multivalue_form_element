@@ -499,7 +499,10 @@ class MultiValue extends FormElement {
     // $form_state->get(['multivalue_form_element_storage', '#parents', ...$parents..., '#elements', $element_name]),
     // to avoid clashes between field names and $parents parts.
     // phpcs:enable
-    return array_merge(['multivalue_form_element_storage', '#parents'], $parents, ['#elements', $element_name]);
+    return array_merge(['multivalue_form_element_storage', '#parents'],
+      $parents,
+      ['#elements', $element_name],
+    );
   }
 
 }
