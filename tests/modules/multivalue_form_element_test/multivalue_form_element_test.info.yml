@@ -2,7 +2,7 @@ name: Multi-value form element test
 description: Test module for Multi-value form element.
 type: module
 package: Testing
-core_version_requirement: ^9.2
+core_version_requirement: ^9.3
 
 dependencies:
   - drupal:multivalue_form_element
