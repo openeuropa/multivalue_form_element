@@ -1,11 +1,20 @@
 # Changelog
 
+## [1.0.0-beta4](https://github.com/openeuropa/multivalue_form_element/tree/1.0.0-beta4) (2022-07-29)
+
+[Full Changelog](https://github.com/openeuropa/multivalue_form_element/compare/1.0.0-beta3...1.0.0-beta4)
+
+**Merged pull requests:**
+
+- EWPP-2358: Drupal 9.4 support. [\#14](https://github.com/openeuropa/multivalue_form_element/pull/14) ([yenyasinn](https://github.com/yenyasinn))
+
 ## [1.0.0-beta3](https://github.com/openeuropa/multivalue_form_element/tree/1.0.0-beta3) (2022-02-08)
 
 [Full Changelog](https://github.com/openeuropa/multivalue_form_element/compare/1.0.0-beta2...1.0.0-beta3)
 
 **Merged pull requests:**
 
+- EWPP-0000: Prepare for 1.0.0-beta3 release. [\#13](https://github.com/openeuropa/multivalue_form_element/pull/13) ([hernani](https://github.com/hernani))
 - EWPP-1914: Update to PHP8 [\#12](https://github.com/openeuropa/multivalue_form_element/pull/12) ([yenyasinn](https://github.com/yenyasinn))
 - EWPP-1706: Minor code style style fix. [\#11](https://github.com/openeuropa/multivalue_form_element/pull/11) ([upchuk](https://github.com/upchuk))
 
