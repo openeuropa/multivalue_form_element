@@ -213,6 +213,11 @@ class MultiValue extends FormElement {
         '#type' => 'weight',
         '#title' => t('Weight for row @number', ['@number' => $i + 1]),
         '#title_display' => 'invisible',
+        // Note: this 'delta' is the FAPI #type 'weight' element's property.
+        // Without it the available range of numbers won't correspond to
+        // the max number of items in the weight select, causing ordering
+        // issues over 20 items.
+        '#delta' => $max,
         '#default_value' => $i,
         '#weight' => 100,
       ];

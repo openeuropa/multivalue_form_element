@@ -180,9 +180,9 @@ class MultiValueElementTest extends BrowserTestBase {
     $assert_session->fieldExists('bar[0][number]')->setValue(1);
     $assert_session->fieldExists('bar[0][_weight]')->setValue(0);
     $assert_session->fieldExists('bar[1][number]')->setValue(2);
-    $assert_session->fieldExists('bar[1][_weight]')->setValue(-10);
+    $assert_session->fieldExists('bar[1][_weight]')->setValue(-2);
     $assert_session->fieldExists('bar[2][number]')->setValue(3);
-    $assert_session->fieldExists('bar[2][_weight]')->setValue(-5);
+    $assert_session->fieldExists('bar[2][_weight]')->setValue(-1);
     $assert_session->buttonExists('Submit')->press();
     $submitted_values = $this->getSubmittedFormValues();
     $this->assertEquals([
