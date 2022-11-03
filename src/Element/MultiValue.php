@@ -55,7 +55,7 @@ use Drupal\Core\Render\Element\FormElement;
  *     '#title' => $this->t('E-mail'),
  *   ],
  * ];
- * @endCode
+ * @endcode
  *
  * Default values can be set to the multi-value form element. Never set them in
  * child elements as they will be overridden.
@@ -67,9 +67,8 @@ use Drupal\Core\Render\Element\FormElement;
  *     0 => ['name' => 'Bob', 'mail' => 'bob@example.com'],
  *     1 => ['name' => 'Ted', 'mail' => 'ted@example.com'],
  *   ],
- *   ...
  * ];
- * @endCode
+ * @endcode
  *
  * If only one child element is present, said child element name can be omitted
  * from the default value array:
@@ -78,7 +77,6 @@ use Drupal\Core\Render\Element\FormElement;
  *   '#type' => 'multivalue',
  *   '#title' => $this->t('Job titles'),
  *   'title' => [
- *     ...
  *   ],
  *   '#default_value' => [
  *     'Foo',
@@ -118,7 +116,7 @@ use Drupal\Core\Render\Element\FormElement;
  *     '#title' => $this->t('E-mail'),
  *   ],
  * ];
- * @endCode
+ * @endcode
  *
  * If you want to have some children required in all the deltas, use #states
  * to mark the wanted elements as required if one of the other children is
@@ -213,6 +211,11 @@ class MultiValue extends FormElement {
         '#type' => 'weight',
         '#title' => t('Weight for row @number', ['@number' => $i + 1]),
         '#title_display' => 'invisible',
+        // Note: this 'delta' is the FAPI #type 'weight' element's property.
+        // Without it the available range of numbers won't correspond to
+        // the max number of items in the weight select, causing ordering
+        // issues over 20 items.
+        '#delta' => $max,
         '#default_value' => $i,
         '#weight' => 100,
       ];
