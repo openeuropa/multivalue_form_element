@@ -118,6 +118,16 @@ class MultiValueElementTest extends BrowserTestBase {
     $assert_session->fieldExists('foo[1][text]');
     $assert_session->elementNotExists('css', 'input[name^="foo[2]"]');
 
+    // Test that the max weight reflects the numbers of items available.
+    $expected_weight_range = range(-1, 1);
+    $this->assertEquals($expected_weight_range, array_keys($this->getOptions($assert_session->selectExists('foo[0][_weight]'))));
+    $this->assertEquals($expected_weight_range, array_keys($this->getOptions($assert_session->selectExists('foo[1][_weight]'))));
+    $assert_session->buttonExists('foo_add_more')->press();
+    $expected_weight_range = range(-2, 2);
+    $this->assertEquals($expected_weight_range, array_keys($this->getOptions($assert_session->selectExists('foo[0][_weight]'))));
+    $this->assertEquals($expected_weight_range, array_keys($this->getOptions($assert_session->selectExists('foo[1][_weight]'))));
+    $this->assertEquals($expected_weight_range, array_keys($this->getOptions($assert_session->selectExists('foo[2][_weight]'))));
+
     // Reset all the default values.
     $this->setFormDefaultValues([]);
     $this->drupalGet('/multivalue-form-element/element-test-form');
