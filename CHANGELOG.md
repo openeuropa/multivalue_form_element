@@ -1,11 +1,21 @@
 # Changelog
 
-## [1.0.0-beta4](https://github.com/openeuropa/multivalue_form_element/tree/1.0.0-beta4) (2022-07-29)
+## [1.0.0-beta5](https://github.com/openeuropa/multivalue_form_element/tree/1.0.0-beta5) (2022-11-04)
+
+[Full Changelog](https://github.com/openeuropa/multivalue_form_element/compare/1.0.0-beta4...1.0.0-beta5)
+
+**Merged pull requests:**
+
+- EWPP-2703: Add test coverage for max delta bug. [\#17](https://github.com/openeuropa/multivalue_form_element/pull/17) ([brummbar](https://github.com/brummbar))
+- EWPP-2703: Item weight should reflect the current number of items sortable. [\#16](https://github.com/openeuropa/multivalue_form_element/pull/16) ([nagyad](https://github.com/nagyad))
+
+## [1.0.0-beta4](https://github.com/openeuropa/multivalue_form_element/tree/1.0.0-beta4) (2022-08-02)
 
 [Full Changelog](https://github.com/openeuropa/multivalue_form_element/compare/1.0.0-beta3...1.0.0-beta4)
 
 **Merged pull requests:**
 
+- Prepare release 1.0.0-beta4. [\#15](https://github.com/openeuropa/multivalue_form_element/pull/15) ([imanoleguskiza](https://github.com/imanoleguskiza))
 - EWPP-2358: Drupal 9.4 support. [\#14](https://github.com/openeuropa/multivalue_form_element/pull/14) ([yenyasinn](https://github.com/yenyasinn))
 
 ## [1.0.0-beta3](https://github.com/openeuropa/multivalue_form_element/tree/1.0.0-beta3) (2022-02-08)
