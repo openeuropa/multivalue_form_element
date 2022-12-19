@@ -1,3 +1,7 @@
+# :warning: This repository is archived
+
+Development has moved to [drupal.org](https://www.drupal.org/project/multivalue_form_element).
+
 # Multi-value form element
 
 Provides a multi-value form element that wraps any number of form elements.
